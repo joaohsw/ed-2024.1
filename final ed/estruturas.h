@@ -28,5 +28,8 @@ NoABB* inserir_na_abb(NoABB *raiz, Individuo *pessoa);
 void imprimir_lista(Individuo *head);
 void imprimir_fila(NoFila *head);
 void imprimir_abb(NoABB *raiz);
+void liberar_lista(Individuo *head);
+void liberar_fila(NoFila *head);
+void liberar_abb(NoABB *raiz);
 
 #endif

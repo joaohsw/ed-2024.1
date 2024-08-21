@@ -2,60 +2,80 @@
 #include <stdlib.h>
 #include <string.h>
 #include "estruturas.h"
-#include "menu.h"
-
 
 void menu_principal() {
+
     Individuo *lista = NULL;
     NoFila *fila = NULL;
     NoABB *abb = NULL;
 
+    int N;
+
+    printf("Informe o numero de pessoas a serem inseridas: ");
+    scanf("%d", &N);
+
+    for (int i = 0; i < N; i++) {
+
+        Individuo *nova_pessoa = (Individuo*) malloc(sizeof(Individuo));
+        nova_pessoa->prox = NULL;
+
+        printf("\n> Informe os dados da pessoa %d\n", i+1);
+
+        printf("Informe o CPF: ");
+        scanf("%ld", &nova_pessoa->cpf);
+        printf("Informe o nome: ");
+        scanf(" %[^\n]s", nova_pessoa->nome);
+        printf("Informe a idade: ");
+        scanf("%d", &nova_pessoa->idade);
+        printf("Informe o fator de prioridade (1-5): ");
+        scanf("%d", &nova_pessoa->fator_prioridade);
+
+        lista = inserir_na_lista(lista, nova_pessoa);
+        fila = inserir_na_fila_por_prioridade(fila, nova_pessoa);
+        abb = inserir_na_abb(abb, nova_pessoa);
+
+
+    }
+
     int input;
 
-    while(1) {
-        printf("\n1. Registrar pessoa\n");
-        printf("2. Imprimir lista\n");
-        printf("3. Imprimir fila\n");
-        printf("4. Imprimir ABB\n");
-        printf("5. Sair\n");
-        printf("Informe a opcao: ");
+    do {
+        printf("\n> Digite 1 para imprimir a lista simplesmente encadeada: ");
         scanf("%d", &input);
+    } while (input != 1);
 
-        switch(input) {
-            case 1: {
-                Individuo *nova_pessoa = (Individuo*) malloc(sizeof(Individuo));
-                nova_pessoa->prox = NULL;
+    printf("\n> Lista Simplesmente Encadeada\n");
+    imprimir_lista(lista);
 
-                printf("Informe o CPF: ");
-                scanf("%ld", &nova_pessoa->cpf);
-                printf("Informe o nome: ");
-                scanf(" %[^\n]s", nova_pessoa->nome);
-                printf("Informe a idade: ");
-                scanf("%d", &nova_pessoa->idade);
-                printf("Informe o fator de prioridade (1-5): ");
-                scanf("%d", &nova_pessoa->fator_prioridade);
+    input = 0;
 
-                lista = inserir_na_lista(lista, nova_pessoa);
-                fila = inserir_na_fila_por_prioridade(fila, nova_pessoa);
-                abb = inserir_na_abb(abb, nova_pessoa);
-                break;
-            }
-            case 2:
-                printf("\n--- Lista Simplesmente Encadeada ---\n");
-                imprimir_lista(lista);
-                break;
-            case 3:
-                printf("\n--- Fila Ordenada por Prioridade ---\n");
-                imprimir_fila(fila);
-                break;
-            case 4:
-                printf("\n--- Árvore Binária de Busca (ABB) ---\n");
-                imprimir_abb(abb);
-                break;
-            case 5:
-                exit(0);
-            default:
-                printf("Opcao invalida\n");
-        }
-    }
+    do {
+        printf("\n> Digite 1 para imprimir a fila ordenada por prioridade: ");
+        scanf("%d", &input);
+    } while (input != 1);
+
+    printf("\n> Fila Ordenada por Prioridade\n");
+    imprimir_fila(fila);
+
+    input = 0;
+
+    do {
+        printf("\n> Digite 1 para imprimir a arvore binaria de busca (ABB): ");
+        scanf("%d", &input);
+    } while (input != 1);
+
+    printf("\n> Arvore Binaria de Busca (ABB)\n");
+    imprimir_abb(abb);
+
+    input = 0;
+
+    do {
+        printf("\n> Digite 1 para encerrar o programa: ");
+        scanf("%d", &input);
+    } while (input != 1);
+
+    liberar_lista(lista);
+    liberar_fila(fila);
+    liberar_abb(abb);
+
 }

@@ -78,3 +78,29 @@ void imprimir_abb(NoABB *raiz) {
         imprimir_abb(raiz->dir);
     }
 }
+
+void liberar_lista(Individuo *head) {
+    Individuo *atual = head;
+    while (atual != NULL) {
+        Individuo *temp = atual;
+        atual = atual->prox;
+        free(temp);
+    }
+}
+
+void liberar_fila(NoFila *head) {
+    NoFila *atual = head;
+    while (atual != NULL) {
+        NoFila *temp = atual;
+        atual = atual->prox;
+        free(temp);
+    }
+}
+
+void liberar_abb(NoABB *raiz) {
+    if (raiz != NULL) {
+        liberar_abb(raiz->esq);
+        liberar_abb(raiz->dir);
+        free(raiz);
+    }
+}
